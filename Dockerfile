@@ -1,5 +1,8 @@
 FROM ubuntu:latest
 
+RUN DEBIAN_FRONTEND=noninteractive TZ=Europe/Berlin apt-get update
+RUN DEBIAN_FRONTEND=noninteractive apt-get upgrade -y
+
 RUN DEBIAN_FRONTEND=noninteractive apt-get install sudo curl git nodejs npm jq apache2 wget apt-utils -y
 
 RUN curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
