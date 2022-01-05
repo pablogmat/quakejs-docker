@@ -1,6 +1,6 @@
 FROM ubuntu:latest
 
-RUN apt-get install sudo curl git nodejs npm jq apache2 wget apt-utils -y
+RUN DEBIAN_FRONTEND=noninteractive apt-get install sudo curl git nodejs npm jq apache2 wget apt-utils -y
 
 RUN curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
 
