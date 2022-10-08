@@ -5,9 +5,6 @@
 
 ![Docker Image CI](https://github.com/treyyoder/quakejs-docker/workflows/Docker%20Image%20CI/badge.svg)
 </div>
-:warning: 4/22/2020 Fixed a bug that was preventing other maps from loading.  Pull the lastest image from Docker Hub.
-
-:warning: 4/20/2020 Issues with entrypoint permissions and the refresh loop have been addressed.  Pull the lastest image from Docker Hub.
 
 ### A fully local and Dockerized quakejs server. Independent, unadulterated, and free from the middleman.  
 
@@ -21,16 +18,16 @@ docker pull treyyoder/quakejs:latest
 #### and run it:
 
 ```
-docker run -d --name quakejs -e SERVER=<SERVER_NAME_OR_IP> -e HTTP_PORT=<HTTP_PORT> -p <HTTP_PORT>:80 -p 27960:27960 treyyoder/quakejs:latest
+docker run -d --name quakejs -e HTTP_PORT=<HTTP_PORT> -p <HTTP_PORT>:80 -p 27960:27960 treyyoder/quakejs:latest
 ```
 
 #### Example:
 
 ```
-docker run -d --name quakejs -e SERVER=10.0.0.2 -e HTTP_PORT=8080 -p 8080:80 -p 27960:27960 treyyoder/quakejs:latest
+docker run -d --name quakejs -e HTTP_PORT=8080 -p 8080:80 -p 27960:27960 treyyoder/quakejs:latest
 ```
 
-Send all you friends/coworkers the link: ex. http://10.0.0.2:8080 and start fragging ;)
+Send all you friends/coworkers the link: ex. http://localhost:8080 and start fragging ;)
 
 #### server.cfg:
 Refer to [quake3world](https://www.quake3world.com/q3guide/servers.html) for instructions on its usage.
@@ -42,7 +39,6 @@ services:
     quakejs:
         container_name: quakejs
         environment:
-            - SERVER=10.0.0.2
             - HTTP_PORT=8080
         ports:
             - '8080:80'
@@ -50,6 +46,12 @@ services:
         image: 'treyyoder/quakejs:latest'
 ```
 
+#### Building the Image
+After pulling the repo, change both `Dockerfile` and `entrypoint.sh` from CRLF to LF.
+
+Build the image with:
+
+`docker build --add-host=content.quakejs.com:127.0.0.1 -t treyyoder/quakejs:latest .`
 
 ## Credits:
 

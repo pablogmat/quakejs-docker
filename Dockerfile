@@ -1,4 +1,7 @@
-FROM ubuntu:latest
+FROM ubuntu:20.04
+
+ARG DEBIAN_FRONTEND=noninteractive
+ENV TZ=US/Eastern
 
 RUN DEBIAN_FRONTEND=noninteractive TZ=Europe/Berlin apt-get update
 RUN DEBIAN_FRONTEND=noninteractive apt-get upgrade -y
@@ -7,7 +10,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install sudo curl git nodejs npm jq a
 
 RUN curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
 
-RUN git clone --recurse-submodules https://github.com/begleysm/quakejs.git
+RUN git clone --branch fix_module https://github.com/nerosketch/quakejs.git
 WORKDIR /quakejs
 RUN npm install
 RUN ls
@@ -21,8 +24,6 @@ COPY ./include/ioq3ded/ioq3ded.fixed.js /quakejs/build/ioq3ded.js
 RUN rm /var/www/html/index.html && cp /quakejs/html/* /var/www/html/
 COPY ./include/assets/ /var/www/html/assets
 RUN ls /var/www/html
-
-RUN echo "127.0.0.1 content.quakejs.com" >> /etc/hosts
 
 WORKDIR /
 ADD entrypoint.sh /entrypoint.sh
